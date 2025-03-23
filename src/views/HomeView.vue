@@ -175,14 +175,14 @@ const handleRenewPassword = async ({
     renewPasswordModel.updateInitialValues(2, {
       password: loginPassword.value,
       userName: prodRenewUserName.value,
-      newPassword: prodPassword.value,
-      repeatPassword: prodPassword.value,
+      newPassword: prodPassword?.value ? prodPassword.value : null,
+      repeatPassword: prodPassword?.value ? prodPassword.value : null,
     })
     renewPasswordModel.updateInitialValues(3, {
       password: loginPassword.value,
       userName: magypRenewUserName.value,
-      newPassword: magypPassword.value,
-      repeatPassword: magypPassword.value,
+      newPassword: magypPassword?.value ? magypPassword.value : null,
+      repeatPassword: magypPassword?.value ? magypPassword.value : null,
     })
     const payload = renewPasswordModel.getPayload()
     try {
