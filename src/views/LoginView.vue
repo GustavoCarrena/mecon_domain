@@ -49,7 +49,6 @@
 <script setup>
 import router from '@/router'
 import { onMounted, ref } from 'vue'
-import Footer from '@/components/footer/Footer.vue'
 import { useLogin } from '@/composables/auth.js'
 import {
   setAuthToLocalStorage,
