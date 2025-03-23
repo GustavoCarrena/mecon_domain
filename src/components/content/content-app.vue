@@ -1,11 +1,11 @@
 <template>
-  <main>
+  <div class="min-h-screen flex flex-col">
     <NavBar />
-    <div class="flex flex-col w-auto custom-container">
-      <slot />
-    </div>
-  </main>
-  <div class="flex w-auto h-full">
+    <main class="flex-grow">
+      <div class="flex flex-col w-full custom-container">
+        <slot />
+      </div>
+    </main>
     <Footer />
   </div>
 </template>

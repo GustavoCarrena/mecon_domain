@@ -24,8 +24,27 @@ export const loginFormSchema = yup.object({
 })
 
 export const renewPasswordFormSchema = yup.object({
+  prodRenewUserName: yup
+    .string()
+    .nullable()
+    .transform((value) => (value === '' ? null : value))
+    .matches(
+      ALPHANUMERIC_USER_RULE,
+      'El usuario solo puede contener letras y números'
+    ),
+  magypRenewUserName: yup
+    .string()
+    .nullable()
+    .transform((value) => (value === '' ? null : value))
+    .matches(
+      ALPHANUMERIC_USER_RULE,
+      'El usuario solo puede contener letras y números'
+    ),
   newMeconPassword: yup.string().required('La contraseña es requerida'),
-  repeatMeconNewPassword: yup.string().required('La contraseña es requerida'),
+  repeatMeconNewPassword: yup
+    .string()
+    .required('La contraseña es requerida')
+    .oneOf([yup.ref('newMeconPassword')], 'Las contraseñas deben coincidir'),
   prodPassword: yup.string().required('La contraseña es requerida'),
   magypPassword: yup.string().required('La contraseña es requerida'),
 })

@@ -39,7 +39,7 @@
         class="mb-4 button-style"
         type="Submit"
         :loading="isPending"
-        label="Actualizar contraseñas"
+        label="Ingresar"
         :disabled="isPending"
       />
     </Form>
@@ -47,8 +47,9 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
 import router from '@/router'
+import { onMounted, ref } from 'vue'
+import Footer from '@/components/footer/Footer.vue'
 import { useLogin } from '@/composables/auth.js'
 import {
   setAuthToLocalStorage,
@@ -63,11 +64,9 @@ import { yupResolver } from '@primevue/forms/resolvers/yup'
 import { InputText, InputPassword, Button } from '../components/form/index'
 import { useUsersStore } from '@/stores/userStore'
 import Message from 'primevue/message'
-import HomeView from './HomeView.vue'
 
 const toast = useToast()
 const userStore = useUsersStore()
-const userLoginPassword = ref('')
 
 const initialValues = ref({
   meconUserName: '',
@@ -87,13 +86,11 @@ const handleLogin = async ({ states: { meconUserName, password }, valid }) => {
     try {
       const response = await login(payload)
       const meconUserName = userStore.setUserName(payload.usuario)
-      userLoginPassword.value = payload.password
-      console.log('userLoginPassword', userLoginPassword.value)
+      userStore.setLoginPassword(payload.password)
       await setAuthToLocalStorage({
         ...response,
         usuario: meconUserName,
       })
-      localStorage.setItem('encodedPassword', btoa(payload.password))
       router.replace({ name: 'home' })
     } catch (error) {
       console.log(error)
@@ -102,6 +99,7 @@ const handleLogin = async ({ states: { meconUserName, password }, valid }) => {
         toast
       )
       userStore.setUserName('')
+      userStore.setLoginPassword('')
       deleteAuthFromLocalStorage()
     }
   }
@@ -248,6 +246,7 @@ onMounted(() => {
   @media (min-width: 1200px) {
     width: auto;
     margin-top: 5%;
+    height: 100%;
 
     .title-style {
       font-size: 2.5rem;
