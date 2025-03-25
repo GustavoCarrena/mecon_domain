@@ -45,7 +45,7 @@
             />
           </Fieldset>
 
-          <Fieldset>
+          <Fieldset v-if="isFirstLoggin">
             <template #legend>
               <div class="flex items-center -ml-3">
                 <span
@@ -63,7 +63,6 @@
             />
 
             <InputPassword
-              v-if="isFirstLoggin"
               :id="'prodRenewPassword'"
               class="w-full"
               :name="'prodPassword'"
@@ -77,7 +76,7 @@
             >
           </Fieldset>
 
-          <Fieldset>
+          <Fieldset v-if="isFirstLoggin">
             <template #legend>
               <div class="flex items-center -ml-3">
                 <span
@@ -95,7 +94,6 @@
             />
 
             <InputPassword
-              v-if="isFirstLoggin"
               :id="'magypRenewPassword'"
               class="w-full"
               :name="'magypPassword'"

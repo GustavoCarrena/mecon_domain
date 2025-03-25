@@ -5,7 +5,7 @@ const authService = {
     // const { data } = await api.post('/Auth/Login', payload)
     const data = {
       token: '',
-      isFirstLoggin: false,
+      isFirstLoggin: true,
     }
     return data
   },
