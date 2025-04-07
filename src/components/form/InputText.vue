@@ -15,7 +15,7 @@ const model = defineModel()
 
 <template>
   <div class="flex flex-col items-start gap-2">
-    <label class="pl-1 text-sm font-semibold" for="inputtext">{{
+    <label class="pl-1 text-sm text-gray-700 font-semibold" for="inputtext">{{
       label
     }}</label>
     <InputText

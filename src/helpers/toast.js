@@ -3,7 +3,7 @@ export function showError({ message, summary }, toast) {
     severity: 'error',
     summary: summary,
     detail: message,
-    life: 5000,
+    life: 6000,
   })
 }
 
@@ -12,6 +12,6 @@ export function showSuccess({ message, summary }, toast) {
     severity: 'success',
     summary: summary,
     detail: message,
-    life: 5000,
+    life: 3000,
   })
 }

@@ -17,22 +17,29 @@
         :id="'meconLoginUserName'"
         class="w-full"
         name="meconUserName"
-        label="Usuario"
+        label="Usuario - @mecon.gob.ar"
         :errorMsg="$form.meconUserName?.error?.message"
       />
       <div class="w-full">
         <InputPassword
           :id="'meconLoginPassword'"
-          class="w-full"
+          class="w-full text-base"
           name="password"
           label="Contraseña"
           :errorMsg="$form.password?.error?.message"
         />
-        <Message size="small" severity="secondary" variant="simple"
-          ><span class="text-xs">
-            Si olvidó su contraseña, comunicarse con...</span
-          ></Message
+        <Message
+          size="small"
+          severity="secondary"
+          variant="simple"
+          class="pl-1 pt-2"
         >
+          <span class="text-xs">
+            Si olvidó su contraseña: para edificio Av. Paseo Colón comunicarse
+            con el interno 42600 y para edificio Av. Presidente Julio A. Roca
+            con el interno #5400.
+          </span>
+        </Message>
       </div>
 
       <Button
@@ -94,7 +101,11 @@ const handleLogin = async ({ states: { meconUserName, password }, valid }) => {
     } catch (error) {
       console.log(error)
       showError(
-        { message: 'Usuario o Contraseña incorrectos', summary: 'Error' },
+        {
+          message:
+            'Para edificio Av. Paseo Colón comunicarse con el interno 42600 y para edificio Av. Presidente Julio A. Roca con el interno #5400',
+          summary: 'Error',
+        },
         toast
       )
       userStore.setUserName('')

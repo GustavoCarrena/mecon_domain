@@ -15,7 +15,7 @@
             <template #legend>
               <div class="flex items-center -ml-3">
                 <span
-                  class="font-semibold text-blue-500 text-xs pb-1 opacity-80"
+                  class="font-semibold text-blue-500 text-lg pb-1 opacity-80"
                   >@mecon.gob.ar</span
                 >
               </div>
@@ -49,8 +49,8 @@
             <template #legend>
               <div class="flex items-center -ml-3">
                 <span
-                  class="font-semibold text-blue-500 text-xs pb-1 opacity-80"
-                  >@produccion.gob.ar</span
+                  class="font-semibold text-blue-500 text-lg pb-1 opacity-80"
+                  >Olimpus (ejemplo: @produccion.gob.ar)</span
                 >
               </div>
             </template>
@@ -71,7 +71,7 @@
             />
             <Message size="small" severity="secondary" variant="simple"
               ><span class="text-xs"
-                >Si olvidó su contraseña, comunicarse con...</span
+                >Si olvidó su contraseña comunicarse con el interno #5400</span
               ></Message
             >
           </Fieldset>
@@ -80,7 +80,7 @@
             <template #legend>
               <div class="flex items-center -ml-3">
                 <span
-                  class="font-semibold text-blue-500 text-xs pb-1 opacity-80"
+                  class="font-semibold text-blue-500 text-lg pb-1 opacity-80"
                   >@magyp.gob.ar</span
                 >
               </div>
@@ -101,8 +101,8 @@
               :errorMsg="$form.magypPassword?.error?.message"
             />
             <Message size="small" severity="secondary" variant="simple"
-              ><span class="text-xs"
-                >Si olvidó su contraseña, comunicarse con...</span
+              ><span class="text-xs">
+                Si olvidó su contraseña comunicarse con el interno 42600</span
               ></Message
             >
           </Fieldset>

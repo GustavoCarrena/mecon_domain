@@ -22,7 +22,7 @@ const handlePaste = (event) => {
 
 <template>
   <div class="flex flex-col items-start gap-2">
-    <label class="pl-1 text-sm font-semibold" for="password"
+    <label class="pl-1 text-sm text-gray-700 font-semibold" for="password"
       >{{ label }} <span v-if="required" class="text-red-500">*</span></label
     >
     <Password
