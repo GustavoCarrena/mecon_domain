@@ -2,16 +2,10 @@ export default class RenewPasswordModel {
   constructor() {
     this.initialValues = []
   }
-  addInitialValues(
-    idServidor,
-    userName,
-    password,
-    newPassword,
-    repeatPassword
-  ) {
+  addInitialValues(idServidor, usuario, password, newPassword, repeatPassword) {
     this.initialValues.push({
       idServidor,
-      userName,
+      usuario,
       password,
       newPassword,
       repeatPassword,
@@ -20,7 +14,7 @@ export default class RenewPasswordModel {
   getPayload() {
     return this.initialValues.map((model) => ({
       idServidor: model.idServidor,
-      usuario: model.userName,
+      usuario: model.usuario,
       password: model.password,
       passwordNew: model.newPassword,
       passwordNewVerify: model.repeatPassword,
@@ -29,7 +23,11 @@ export default class RenewPasswordModel {
   updateInitialValues(idServidor, newValues) {
     const model = this.initialValues.find((m) => m.idServidor === idServidor)
     if (model) {
-      Object.assign(model, newValues)
+      for (const key in newValues) {
+        if (newValues[key] !== undefined && newValues[key] !== null) {
+          model[key] = newValues[key]
+        }
+      }
     }
   }
 }

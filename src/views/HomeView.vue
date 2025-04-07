@@ -55,18 +55,19 @@
               </div>
             </template>
             <InputText
-              :id="'prodRenewUserName'"
+              :id="'prodUserName'"
+              v-model="prodUserName"
               class="w-full"
-              :name="'prodRenewUserName'"
+              :name="'prodUserName'"
               label="Usuario"
-              :errorMsg="$form.prodRenewUserName?.error?.message"
+              :errorMsg="$form.prodUserName?.error?.message"
             />
 
             <InputPassword
               :id="'prodRenewPassword'"
               class="w-full"
               :name="'prodPassword'"
-              label="Contraseña"
+              label="Contraseña actual"
               :errorMsg="$form.prodPassword?.error?.message"
             />
             <Message size="small" severity="secondary" variant="simple"
@@ -86,18 +87,19 @@
               </div>
             </template>
             <InputText
-              :id="'magypRenewUserName'"
+              :id="'magypUserName'"
+              v-model="magypUserName"
               class="w-full"
-              :name="'magypRenewUserName'"
+              :name="'magypUserName'"
               label="Usuario"
-              :errorMsg="$form.magypRenewUserName?.error?.message"
+              :errorMsg="$form.magypUserName?.error?.message"
             />
 
             <InputPassword
               :id="'magypRenewPassword'"
               class="w-full"
               :name="'magypPassword'"
-              label="Contraseña"
+              label="Contraseña actual"
               :errorMsg="$form.magypPassword?.error?.message"
             />
             <Message size="small" severity="secondary" variant="simple"
@@ -143,12 +145,14 @@ import { deleteAuthFromLocalStorage } from '@/helpers/auth'
 const userStore = useUsersStore()
 const loginPassword = ref('')
 const meconUserName = getAuthFromLocalStorage(userStore?.getUserName)?.usuario
+const prodUserName = ref('')
+const magypUserName = ref('')
 const { isFirstLoggin } = getAuthFromLocalStorage()
 const toast = useToast()
 const renewPasswordModel = new RenewPasswordModel()
 renewPasswordModel.addInitialValues(1, meconUserName, '', '', '') // MECON
-renewPasswordModel.addInitialValues(2, '', '', '', '') // PROD
-renewPasswordModel.addInitialValues(3, '', '', '', '') // MAGYP
+renewPasswordModel.addInitialValues(2, prodUserName.value, '', '', '') // PROD
+renewPasswordModel.addInitialValues(3, magypUserName.value, '', '', '') // MAGYP
 const initialValues = ref(renewPasswordModel.initialValues)
 
 const { isPending, mutateAsync: renewPassword } = useRenewPassword()
@@ -157,30 +161,35 @@ const handleRenewPassword = async ({
   states: {
     newMeconPassword,
     repeatMeconNewPassword,
-    prodRenewUserName,
+    prodUserName,
     prodPassword,
-    magypRenewUserName,
+    magypUserName,
     magypPassword,
   },
   valid,
 }) => {
   if (valid) {
     renewPasswordModel.updateInitialValues(1, {
+      usuario: meconUserName.value,
       password: loginPassword.value,
       newPassword: newMeconPassword.value,
       repeatPassword: repeatMeconNewPassword.value,
     })
     renewPasswordModel.updateInitialValues(2, {
-      password: loginPassword.value,
-      userName: prodRenewUserName.value,
-      newPassword: prodPassword?.value ? prodPassword.value : null,
-      repeatPassword: prodPassword?.value ? prodPassword.value : null,
+      usuario: prodUserName.value ? prodUserName.value : null,
+      password: prodPassword?.value ? prodPassword.value : null,
+      newPassword: newMeconPassword?.value ? newMeconPassword.value : null,
+      repeatPassword: repeatMeconNewPassword?.value
+        ? repeatMeconNewPassword?.value
+        : null,
     })
     renewPasswordModel.updateInitialValues(3, {
-      password: loginPassword.value,
-      userName: magypRenewUserName.value,
-      newPassword: magypPassword?.value ? magypPassword.value : null,
-      repeatPassword: magypPassword?.value ? magypPassword.value : null,
+      usuario: magypUserName.value ? magypUserName.value : null,
+      password: magypPassword?.value ? magypPassword.value : null,
+      newPassword: newMeconPassword?.value ? newMeconPassword.value : null,
+      repeatPassword: repeatMeconNewPassword?.value
+        ? repeatMeconNewPassword?.value
+        : null,
     })
     const payload = renewPasswordModel.getPayload()
     try {
