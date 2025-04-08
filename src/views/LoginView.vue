@@ -82,6 +82,8 @@ const initialValues = ref({
 
 const { isPending, mutateAsync: login } = useLogin()
 
+const MECON_SERVER_ID = 1
+
 const handleLogin = async ({ states: { meconUserName, password }, valid }) => {
   if (valid) {
     const payload = {
@@ -91,7 +93,11 @@ const handleLogin = async ({ states: { meconUserName, password }, valid }) => {
     }
     try {
       const response = await login(payload)
-      const meconUserName = userStore.setUserName(payload.usuario)
+      const { userProfile } = response
+      const loggedUser = userProfile.find(
+        (server) => server.idServidor === MECON_SERVER_ID
+      ).user
+      const meconUserName = userStore.setUserName(loggedUser)
       userStore.setLoginPassword(payload.password)
       await setAuthToLocalStorage({
         ...response,

@@ -16,8 +16,18 @@
               <div class="flex items-center -ml-3">
                 <span
                   class="font-semibold text-blue-500 text-lg pb-1 opacity-80"
-                  >@mecon.gob.ar</span
-                >
+                  >@mecon.gob.ar
+                  <i
+                    v-tooltip.bottom="{
+                      value:
+                        'La contraseña debe contener al menos 10 caracteres, al menos una letra minúscula, al menos una letra mayúscula, al menos un número y al menos un caracter especial (#,%,?,etc.)',
+                      autoHide: false,
+                    }"
+                    class="pi pi-question-circle text-blue-500 cursor-crosshair"
+                    type="text"
+                    placeholder="Right"
+                  ></i
+                ></span>
               </div>
             </template>
             <InputText
@@ -50,8 +60,18 @@
               <div class="flex items-center -ml-3">
                 <span
                   class="font-semibold text-blue-500 text-lg pb-1 opacity-80"
-                  >Olimpus (ejemplo: @produccion.gob.ar)</span
-                >
+                  >Olimpus (ejemplo: @produccion.gob.ar)
+                  <i
+                    v-tooltip.bottom="{
+                      value:
+                        'La contraseña debe contener al menos 10 caracteres, al menos una letra minúscula, al menos una letra mayúscula, al menos un número y al menos un caracter especial (#,%,?,etc.)',
+                      autoHide: false,
+                    }"
+                    class="pi pi-question-circle text-blue-500 cursor-crosshair"
+                    type="text"
+                    placeholder="Right"
+                  ></i>
+                </span>
               </div>
             </template>
             <InputText
@@ -82,8 +102,18 @@
               <div class="flex items-center -ml-3">
                 <span
                   class="font-semibold text-blue-500 text-lg pb-1 opacity-80"
-                  >@magyp.gob.ar</span
-                >
+                  >@magyp.gob.ar
+                  <i
+                    v-tooltip.bottom="{
+                      value:
+                        'La contraseña debe contener al menos 8 caracteres, al menos una letra minúscula, al menos una letra mayúscula',
+                      autoHide: false,
+                    }"
+                    class="pi pi-question-circle text-blue-500 cursor-crosshair"
+                    type="text"
+                    placeholder="Right"
+                  ></i>
+                </span>
               </div>
             </template>
             <InputText
@@ -135,12 +165,14 @@ import { useRenewPassword } from '@/composables/renewPassword.js'
 import Message from 'primevue/message'
 import Fieldset from 'primevue/fieldset'
 import ScrollPanel from 'primevue/scrollpanel'
+import 'primeicons/primeicons.css'
 import { onMounted, ref } from 'vue'
 import { showError, showSuccess } from '@/helpers/toast.js'
 import { useToast } from 'primevue/usetoast'
 import Toast from 'primevue/toast'
 import RenewPasswordModel from '@/models/renewModel'
 import { deleteAuthFromLocalStorage } from '@/helpers/auth'
+// import Tooltip from 'primevue/tooltip';
 
 const userStore = useUsersStore()
 const loginPassword = ref('')
@@ -154,6 +186,7 @@ renewPasswordModel.addInitialValues(1, meconUserName, '', '', '') // MECON
 renewPasswordModel.addInitialValues(2, prodUserName.value, '', '', '') // PROD
 renewPasswordModel.addInitialValues(3, magypUserName.value, '', '', '') // MAGYP
 const initialValues = ref(renewPasswordModel.initialValues)
+const meconTooltip = 'Hola'
 
 const { isPending, mutateAsync: renewPassword } = useRenewPassword()
 
@@ -176,22 +209,24 @@ const handleRenewPassword = async ({
       repeatPassword: repeatMeconNewPassword.value,
     })
     renewPasswordModel.updateInitialValues(2, {
-      usuario: prodUserName.value ? prodUserName.value : null,
-      password: prodPassword?.value ? prodPassword.value : null,
-      newPassword: newMeconPassword?.value ? newMeconPassword.value : null,
-      repeatPassword: repeatMeconNewPassword?.value
-        ? repeatMeconNewPassword?.value
-        : null,
+      usuario: prodUserName?.value ? prodUserName.value : '',
+      password: prodPassword?.value ? prodPassword.value : '',
+      newPassword: prodUserName?.value ? newMeconPassword.value : '',
+      repeatPassword: prodUserName?.value ? repeatMeconNewPassword?.value : '',
     })
     renewPasswordModel.updateInitialValues(3, {
-      usuario: magypUserName.value ? magypUserName.value : null,
-      password: magypPassword?.value ? magypPassword.value : null,
-      newPassword: newMeconPassword?.value ? newMeconPassword.value : null,
-      repeatPassword: repeatMeconNewPassword?.value
-        ? repeatMeconNewPassword?.value
-        : null,
+      usuario: magypUserName?.value ? magypUserName.value : '',
+      password: magypPassword?.value ? magypPassword.value : '',
+      newPassword: magypUserName?.value ? newMeconPassword.value : '',
+      repeatPassword: magypUserName?.value ? repeatMeconNewPassword?.value : '',
     })
-    const payload = renewPasswordModel.getPayload()
+
+    const onlyMeconPayload = {
+      passwordNew: newMeconPassword.value,
+      passwordNewVerify: repeatMeconNewPassword.value,
+    }
+    const firstLogginPayload = renewPasswordModel.getPayload()
+    const payload = isFirstLoggin ? firstLogginPayload : onlyMeconPayload
     try {
       // await renewPassword(payload)
       console.log('renew payload', payload)
