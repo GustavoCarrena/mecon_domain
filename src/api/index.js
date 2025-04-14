@@ -10,6 +10,8 @@ import router from '@/router'
 
 const auth = getAuthFromLocalStorage()
 const loginUrl = ENV.VITE_BASE_URL
+console.log({ loginUrl })
+
 let isRenewToken = false
 const projectUseRefreshToken = false
 
